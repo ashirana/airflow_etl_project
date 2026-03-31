@@ -1,17 +1,17 @@
 import requests
 import json
+import os
 
 def extract():
     url = "https://jsonplaceholder.typicode.com/posts"
-    
     response = requests.get(url)
-    response.raise_for_status()  # important
-    
     data = response.json()
 
-    file_path = "/tmp/data.json"
+    os.makedirs("/opt/airflow/tmp", exist_ok=True)
+
+    file_path = "/opt/airflow/tmp/raw_data.json"
 
     with open(file_path, "w") as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f)
 
     return file_path
